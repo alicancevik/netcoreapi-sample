@@ -18,6 +18,7 @@ namespace NetCoreApiSample.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+			// Products
             using var context = new NetCoreApiSampleDataContext();
 
             var products = context.Products.ToList();
