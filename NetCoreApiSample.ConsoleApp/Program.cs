@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 
 namespace NetCoreApiSample.ConsoleApp
@@ -10,13 +11,33 @@ namespace NetCoreApiSample.ConsoleApp
     {
         static void Main(string[] args)
         {
+            PutMethods();
+
+            Console.Read();
+        }
+
+
+        private static void GetMethods()
+        {
             GetProducts();
-            
+
             Console.WriteLine("------------------------");
 
             GetCategories();
+        }
 
-            Console.Read();
+        private static void PostMethods()
+        {
+            AddProduct();
+
+            AddCategory();
+        }
+
+        private static void PutMethods()
+        {
+            UpdateProduct();
+
+            UpdateCategory();
         }
 
         private static void GetProducts()
@@ -50,5 +71,104 @@ namespace NetCoreApiSample.ConsoleApp
             foreach (var category in categories)
                 Console.WriteLine($"Id: {category.Id} - Name: {category.Name}");
         }
+
+        private static void AddProduct()
+        {
+            using var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = new Uri("http://localhost:5000/");
+
+            ProductDto product = new ProductDto() 
+            {
+                Name = "Client Test Ürün",
+                Description = "Client Test Ürün Açıklama",
+                Price = 1500,
+                CategoryId = 1
+            };
+
+            var serializeProduct = JsonSerializer.Serialize(product);
+
+            StringContent stringContent = new StringContent(serializeProduct, Encoding.UTF8, "application/json");
+
+            var result = httpClient.PostAsync("api/Products",stringContent).Result;
+
+            if (result.IsSuccessStatusCode)
+                Console.WriteLine("Ürün ekleme başarılı.");
+            else
+                Console.WriteLine($"Ürün eklenemedi. Hata Kodu: {result.StatusCode}");
+        }
+
+        private static void AddCategory()
+        {
+            using var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = new Uri("http://localhost:5000/");
+
+            CategoryDto category = new CategoryDto()
+            {
+                Name = "Client Test Kategori"
+            };
+
+            var serializeCategory = JsonSerializer.Serialize(category);
+
+            StringContent stringContent = new StringContent(serializeCategory, Encoding.UTF8, "application/json");
+
+            var result = httpClient.PostAsync("api/Categories", stringContent).Result;
+
+            if (result.IsSuccessStatusCode)
+                Console.WriteLine("Kategori ekleme başarılı.");
+            else
+                Console.WriteLine($"Kategori eklenemedi. Hata Kodu: {result.StatusCode}");
+        }
+
+        private static void UpdateProduct()
+        {
+            using var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = new Uri("http://localhost:5000/");
+
+            UpdateProductDto product = new UpdateProductDto()
+            {
+                Id = 1,
+                Name = "Client Test Ürün Güncelleme",
+                Price = 1500
+            };
+
+            var serializeProduct = JsonSerializer.Serialize(product);
+
+            StringContent stringContent = new StringContent(serializeProduct, Encoding.UTF8, "application/json");
+
+            var result = httpClient.PutAsync("api/Products/1", stringContent).Result;
+
+            if (result.IsSuccessStatusCode)
+                Console.WriteLine("Ürün güncelleme başarılı.");
+            else
+                Console.WriteLine($"Ürün güncelleme başarısız. Hata Kodu: {result.StatusCode}");
+        }
+
+        private static void UpdateCategory()
+        {
+            using var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = new Uri("http://localhost:5000/");
+
+            Category product = new Category()
+            {
+                Id = 1,
+                Name = "Client Test Kategori Güncelleme",
+            };
+
+            var serializeProduct = JsonSerializer.Serialize(product);
+
+            StringContent stringContent = new StringContent(serializeProduct, Encoding.UTF8, "application/json");
+
+            var result = httpClient.PutAsync("api/Categories/1", stringContent).Result;
+
+            if (result.IsSuccessStatusCode)
+                Console.WriteLine("Kategori güncelleme başarılı.");
+            else
+                Console.WriteLine($"Kategori güncelleme başarısız. Hata Kodu: {result.StatusCode}");
+        }
+
     }
 }
