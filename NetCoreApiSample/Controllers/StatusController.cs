@@ -14,6 +14,7 @@ namespace NetCoreApiSample.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            // test
             return Ok("Service OK");
         }
     }
