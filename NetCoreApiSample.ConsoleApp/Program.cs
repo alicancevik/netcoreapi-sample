@@ -11,7 +11,13 @@ namespace NetCoreApiSample.ConsoleApp
     {
         static void Main(string[] args)
         {
-            PutMethods();
+            // GetMethods();
+
+            // PostMethods();
+
+            // PutMethods();
+
+            DeleteMethods();
 
             Console.Read();
         }
@@ -38,6 +44,13 @@ namespace NetCoreApiSample.ConsoleApp
             UpdateProduct();
 
             UpdateCategory();
+        }
+
+        private static void DeleteMethods()
+        {
+            DeleteProduct();
+
+            DeleteCategory();
         }
 
         private static void GetProducts()
@@ -168,6 +181,38 @@ namespace NetCoreApiSample.ConsoleApp
                 Console.WriteLine("Kategori güncelleme başarılı.");
             else
                 Console.WriteLine($"Kategori güncelleme başarısız. Hata Kodu: {result.StatusCode}");
+        }
+
+        private static void DeleteProduct()
+        {
+            using var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = new Uri("http://localhost:5000/");
+
+            int productId = 1;
+
+            var result = httpClient.DeleteAsync($"api/Products/{productId}").Result;
+
+            if (result.IsSuccessStatusCode)
+                Console.WriteLine("Ürün silme başarılı.");
+            else
+                Console.WriteLine($"Ürün silme başarısız. Hata Kodu: {result.StatusCode}");
+        }
+
+        private static void DeleteCategory()
+        {
+            using var httpClient = new HttpClient();
+
+            httpClient.BaseAddress = new Uri("http://localhost:5000/");
+
+            int categoryId = 1;
+
+            var result = httpClient.DeleteAsync($"api/Categories/{categoryId}").Result;
+
+            if (result.IsSuccessStatusCode)
+                Console.WriteLine("Kategori silme başarılı.");
+            else
+                Console.WriteLine($"Kategori silme başarısız. Hata Kodu: {result.StatusCode}");
         }
 
     }
