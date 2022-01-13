@@ -4,8 +4,8 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["NetCoreApiSample/NetCoreApiSample/NetCoreApiSample.csproj", "NetCoreApiSample/"]
-RUN dotnet restore "NetCoreApiSample/NetCoreApiSample/NetCoreApiSample.csproj"
+COPY ["NetCoreApiSample/NetCoreApiSample.csproj", "NetCoreApiSample/"]
+RUN dotnet restore "NetCoreApiSample/NetCoreApiSample.csproj"
 COPY . .
 WORKDIR "/src/NetCoreApiSample"
 RUN dotnet build "NetCoreApiSample.csproj" -c Release -o /app/build
