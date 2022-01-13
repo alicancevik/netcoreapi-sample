@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/alicancevik/netcoreapi-sample/tree/main.svg?style=svg)](https://circleci.com/gh/alicancevik/netcoreapi-sample/tree/main)
+
 # netcoreapi-sample
 
 ## Git Komutları
