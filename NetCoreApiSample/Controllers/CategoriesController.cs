@@ -14,8 +14,6 @@ namespace NetCoreApiSample.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            bool isFailCheckin 
-
             using var context = new NetCoreApiSampleDataContext();
 
             var categories = context.Categories.ToList();
