@@ -35,7 +35,7 @@ namespace NetCoreApiSample
                         .AllowAnyMethod()
                         .AllowAnyHeader());
                 });
-            services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null); ;
+            services.AddControllers().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NetCoreApiSample", Version = "v1" });
